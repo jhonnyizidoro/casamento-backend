@@ -17,4 +17,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(routes)
 
-app.listen(80)
+const PORT = process.env.PORT || 80
+
+app.listen(PORT, () => {
+	console.log(`Server on on PORT: ${PORT}`)
+})
