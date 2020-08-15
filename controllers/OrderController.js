@@ -5,15 +5,16 @@ const Order = require('../models/Order')
 module.exports.createOrder = async (req, res) => {
 
 	const { cardHash, payment, currentUser, product } = req.body
-	const postBackUrl = process.env.POSTBACK_URL || 'https://en9hljuhpfay.x.pipedream.net'
-	const apiKey = process.env.PAGARME_API_KEY || 'ak_test_eWevGD63bFCvo1pjQ4zPEOtp7SiFEo'
+
+	const POSTBACK_URL = process.env.POSTBACK_URL || 'https://en9hljuhpfay.x.pipedream.net'
+	const PAGARME_API_KEY = process.env.PAGARME_API_KEY || 'ak_test_eWevGD63bFCvo1pjQ4zPEOtp7SiFEo'
 
 	const order = {
 		amount: product.value * 100,
 		card_hash: cardHash,
 		installments: payment.installments || 1,
 		payment_method: 'credit_card',
-		postback_url: postBackUrl,
+		postback_url: POSTBACK_URL,
 		soft_descriptor: 'Casamento Leo',
 		customer: {
 			name: currentUser.displayName,
@@ -54,7 +55,7 @@ module.exports.createOrder = async (req, res) => {
 	}
 
 	try {
-		const client = await pagarme.client.connect({ api_key: apiKey })
+		const client = await pagarme.client.connect({ api_key: PAGARME_API_KEY })
 		const result = await client.transactions.create(order)
 		await Order.create({
 			transaction: result.id,
