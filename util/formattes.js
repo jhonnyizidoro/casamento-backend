@@ -1,0 +1,1 @@
+module.exports.onlyNumbers = string => string.replace(/\D/g, '')
