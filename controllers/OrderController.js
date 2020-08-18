@@ -79,16 +79,16 @@ module.exports.createOrder = async (req, res) => {
 }
 
 module.exports.updateOrder = async (req, res) => {
-	const { id, current_status, transaction: { boleto_url = null } } = req.body
+	const { id, current_status, transaction } = req.body
+
+	const url = transaction && transaction.boleto_url ? transaction.boleto_url : null
+
 	const order = await Order.findOne({
 		where: {
 			transaction: id,
 		},
 	})
-	await order.update({
-		status: current_status,
-		url: boleto_url,
-	})
+	await order.update({ status: current_status, url })
 	res.json(order)
 }
 
