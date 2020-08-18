@@ -11,9 +11,6 @@ module.exports.createOrder = async (req, res) => {
 
 	const order = {
 		amount: product.value * 100,
-		card_hash: cardHash,
-		installments: payment.installments || 1,
-		payment_method: 'credit_card',
 		postback_url: POSTBACK_URL,
 		soft_descriptor: 'Casamento Leo',
 		customer: {
@@ -54,6 +51,15 @@ module.exports.createOrder = async (req, res) => {
 		],
 	}
 
+	if (payment.method === 'boleto') {
+		order.payment_method = 'boleto'
+		order.boleto_instructions = 'Não receber após o vencimento.'
+	} else {
+		order.payment_method = 'credit_card'
+		order.installments = payment.installments || 1
+		order.card_hash = cardHash
+	}
+
 	try {
 		const client = await pagarme.client.connect({ api_key: PAGARME_API_KEY })
 		const result = await client.transactions.create(order)
@@ -63,6 +69,7 @@ module.exports.createOrder = async (req, res) => {
 			value: product.value,
 			product: product.name,
 			status: result.status,
+			method: order.payment_method,
 		})
 		res.json({ id: result.id })
 	} catch (error) {
@@ -72,13 +79,16 @@ module.exports.createOrder = async (req, res) => {
 }
 
 module.exports.updateOrder = async (req, res) => {
-	const { id, current_status } = req.body
+	const { id, current_status, transaction: { boleto_url = null } } = req.body
 	const order = await Order.findOne({
 		where: {
 			transaction: id,
 		},
 	})
-	await order.update({ status: current_status })
+	await order.update({
+		status: current_status,
+		url: boleto_url,
+	})
 	res.json(order)
 }
 

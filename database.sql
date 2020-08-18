@@ -5,6 +5,8 @@ CREATE TABLE Orders (
     value FLOAT NOT NULL,
     product VARCHAR(255) NOT NULL,
     status VARCHAR(255) NOT NULL,
+    url VARCHAR(255) DEFAULT NULL,
+    method VARCHAR(255) NOT NULL,
     createdAt TIMESTAMP NOT NULL,
     updatedAt TIMESTAMP
 );
