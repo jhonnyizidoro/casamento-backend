@@ -4,7 +4,7 @@ const database = require('../database')
 class Order extends Model {
 }
 
-Model.init({
+Order.init({
 	transaction: {
 		type: DataTypes.INTEGER,
 		allowNull: false,
