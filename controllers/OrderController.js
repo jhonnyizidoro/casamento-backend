@@ -1,6 +1,7 @@
 const pagarme = require('pagarme')
 const { onlyNumbers } = require('../util/formattes')
 const Order = require('../models/Order')
+const { sendCreatedOrderEmail, sendUpdatedOrderEmail } = require('../util/order.utils')
 
 module.exports.createOrder = async (req, res) => {
 
@@ -69,33 +70,46 @@ module.exports.createOrder = async (req, res) => {
 			value: product.value,
 			product: product.name,
 			status: result.status,
-			method: order.payment_method,
+			paymentMethod: order.payment_method,
+			userEmail: currentUser.email,
 		})
+		sendCreatedOrderEmail(order.payment_method, currentUser.displayName, currentUser.email, result.id)
+
 		res.json({ id: result.id })
 	} catch (error) {
 		res.status(500).json(error)
 	}
-
 }
 
 module.exports.updateOrder = async (req, res) => {
-	const { id, current_status, 'transaction[boleto_url]': url } = req.body
-
-	const order = await Order.findOne({
-		where: {
-			transaction: id,
-		},
-	})
-	await order.update({ status: current_status, url: url || null })
-	res.json(order)
+	try {
+		const { id, current_status, 'transaction[boleto_url]': url = null } = req.body
+		const order = await Order.findOne({
+			where: {
+				transaction: id,
+			},
+		})
+		await order.update({
+			url,
+			status: current_status,
+		})
+		sendUpdatedOrderEmail(url, current_status, order.paymentMethod, order.userEmail, id)
+		res.json(order)
+	} catch (error) {
+		res.status(500).json(error)
+	}
 }
 
 module.exports.getUserOrders = async (req, res) => {
-	const { userId } = req.params
-	const orders = await Order.findAll({
-		where: {
-			user: userId,
-		},
-	})
-	res.json(orders)
+	try {
+		const { userId } = req.params
+		const orders = await Order.findAll({
+			where: {
+				user: userId,
+			},
+		})
+		res.json(orders)
+	} catch (error) {
+		res.status(500).json(error)
+	}
 }

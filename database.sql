@@ -1,21 +1,25 @@
 CREATE TABLE Orders (
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    createdAt TIMESTAMP NOT NULL,
+    updatedAt TIMESTAMP,
+
     transaction INT NOT NULL,
     user VARCHAR(255) NOT NULL,
     value FLOAT NOT NULL,
     product VARCHAR(255) NOT NULL,
     status VARCHAR(255) NOT NULL,
     url VARCHAR(255) DEFAULT NULL,
-    method VARCHAR(255) NOT NULL,
-    createdAt TIMESTAMP NOT NULL,
-    updatedAt TIMESTAMP
+    paymentMethod VARCHAR(255) NOT NULL,
+    userEmail VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Logs (
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    req MEDIUMTEXT,
-    headers MEDIUMTEXT,
-    route VARCHAR(255),
     createdAt TIMESTAMP NOT NULL,
-    updatedAt TIMESTAMP
+    updatedAt TIMESTAMP,
+
+    type VARCHAR(255) NOT NULL,
+    route VARCHAR(255) DEFAULT NULL,
+    req TEXT,
+    headers TEXT
 );

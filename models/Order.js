@@ -14,7 +14,7 @@ Order.init({
 		allowNull: false,
 	},
 	value: {
-		type: DataTypes.INTEGER,
+		type: DataTypes.FLOAT,
 		allowNull: false,
 	},
 	product: {
@@ -27,9 +27,12 @@ Order.init({
 	},
 	url: {
 		type: DataTypes.STRING,
-		allowNull: true,
 	},
-	method: {
+	paymentMethod: {
+		type: DataTypes.STRING,
+		allowNull: false,
+	},
+	userEmail: {
 		type: DataTypes.STRING,
 		allowNull: false,
 	},

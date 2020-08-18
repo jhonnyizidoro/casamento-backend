@@ -5,6 +5,10 @@ class Log extends Model {
 }
 
 Log.init({
+	type: {
+		type: DataTypes.STRING,
+		allowNull: false,
+	},
 	route: {
 		type: DataTypes.STRING,
 	},
