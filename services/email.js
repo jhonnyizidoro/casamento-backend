@@ -17,11 +17,9 @@ module.exports = (to, subject, html) => {
 		subject,
 		html,
 		from: 'naoresponda@casamentoleoejeny.com.br',
-	}, (err, info) => {
+	}, err => {
 		if (err) {
-			console.log('Erro ao enviar email', err)
-		} else {
-			console.log('Email enviado com sucesso', info)
+			console.log(err, 'Erro ao enviar email')
 		}
 	})
 }

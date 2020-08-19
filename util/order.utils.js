@@ -4,14 +4,14 @@ module.exports.sendCreatedOrderEmail = (paymentMethod, userName, userEmail, orde
 	let html
 	if (paymentMethod === 'boleto') {
 		html = `
-				Olá ${userName}, seu pedido foi recebido e está sendo processado.<br><br>
-				Assim que ele for atualizado você será notificado por e-mail.<br>
+				Olá ${userName}, seu pedido foi recebido.<br><br>
+				Você logo receberá o link para imprimir seu boleto.<br>
 				Você também pode ver o status do pedido clicando <a href="https://casamentoleoejeny.com.br/my-orders">nesse link</a>.
 			`
 	} else {
 		html = `
-				Olá ${userName}, seu pedido foi recebido.<br><br>
-				Você logo receberá o link para imprimir seu boleto.<br>
+				Olá ${userName}, seu pedido foi recebido e está sendo processado.<br><br>
+				Assim que ele for atualizado você será notificado por e-mail.<br>
 				Você também pode ver o status do pedido clicando <a href="https://casamentoleoejeny.com.br/my-orders">nesse link</a>.
 			`
 	}
