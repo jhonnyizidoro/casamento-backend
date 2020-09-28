@@ -36,6 +36,9 @@ Order.init({
 		type: DataTypes.STRING,
 		allowNull: false,
 	},
+	message: {
+		type: DataTypes.TEXT,
+	},
 }, {
 	sequelize: database,
 	modelName: 'Order',

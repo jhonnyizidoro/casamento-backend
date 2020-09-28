@@ -19,6 +19,6 @@
 		"sequelize": "^6.3.4"
 	},
 	"scripts": {
-		"start": "node app"
+		"start": "npm i && node app"
 	}
 }

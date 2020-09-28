@@ -7,7 +7,7 @@ module.exports.createOrder = async (req, res) => {
 
 	const { cardHash, payment, currentUser, product } = req.body
 
-	const POSTBACK_URL = process.env.POSTBACK_URL || 'https://en9hljuhpfay.x.pipedream.net'
+	const POSTBACK_URL = process.env.POSTBACK_URL || 'https://enyxqafja4lsooo.m.pipedream.net'
 	const PAGARME_API_KEY = process.env.PAGARME_API_KEY || 'ak_test_eWevGD63bFCvo1pjQ4zPEOtp7SiFEo'
 
 	const order = {
@@ -72,6 +72,7 @@ module.exports.createOrder = async (req, res) => {
 			status: result.status,
 			paymentMethod: order.payment_method,
 			userEmail: currentUser.email,
+			message: payment.message,
 		})
 		sendCreatedOrderEmail(order.payment_method, currentUser.displayName, currentUser.email, result.id)
 
