@@ -78,7 +78,12 @@ module.exports.createOrder = async (req, res) => {
 
 		res.json({ id: result.id })
 	} catch (error) {
-		res.status(500).json(error)
+		if (error.response && error.response.errors) {
+			const message = error.response.errors[0].message
+			res.status(500).json({ message })
+		} else {
+			res.status(500).json(error)
+		}
 	}
 }
 
@@ -109,6 +114,15 @@ module.exports.getUserOrders = async (req, res) => {
 				user: userId,
 			},
 		})
+		res.json(orders)
+	} catch (error) {
+		res.status(500).json(error)
+	}
+}
+
+module.exports.getOrders = async (req, res) => {
+	try {
+		const orders = await Order.findAll()
 		res.json(orders)
 	} catch (error) {
 		res.status(500).json(error)
