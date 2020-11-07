@@ -1,18 +1,21 @@
 const { DataTypes, Model } = require('sequelize')
 const database = require('../database')
 
-class SongRequest extends Model {
+class Confirmation extends Model {
 }
 
-SongRequest.init({
+Confirmation.init({
 	song: {
 		type: DataTypes.STRING,
+	},
+	guest: {
+		type: DataTypes.STRING,
 		allowNull: false,
+		unique: true,
 	},
 	email: {
 		type: DataTypes.STRING,
 		allowNull: false,
-		unique: true,
 	},
 	displayName: {
 		type: DataTypes.STRING,
@@ -20,7 +23,7 @@ SongRequest.init({
 	},
 }, {
 	sequelize: database,
-	modelName: 'SongRequest',
+	modelName: 'Confirmation',
 })
 
-module.exports = SongRequest
+module.exports = Confirmation

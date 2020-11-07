@@ -27,13 +27,15 @@ CREATE TABLE Logs
     headers   TEXT
 );
 
-CREATE TABLE SongRequests
+CREATE TABLE Confirmations
 (
     id          INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
     createdAt   TIMESTAMP    NOT NULL,
     updatedAt   TIMESTAMP,
 
     song        VARCHAR(255) NOT NULL,
+    guest       VARCHAR(255) NOT NULL,
     email       VARCHAR(255) NOT NULL UNIQUE,
     displayName VARCHAR(255) NOT NULL
+
 );
