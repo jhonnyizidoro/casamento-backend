@@ -37,5 +37,19 @@ CREATE TABLE Confirmations
     guest       VARCHAR(255) NOT NULL UNIQUE,
     email       VARCHAR(255) NOT NULL,
     displayName VARCHAR(255) NOT NULL
+);
 
+CREATE TABLE States
+(
+    id           INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name         VARCHAR(255) NOT NULL,
+    abbreviation VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE Cities
+(
+    id      INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name    VARCHAR(255) NOT NULL,
+    stateId INT,
+    FOREIGN KEY (stateId) REFERENCES States (id)
 );
