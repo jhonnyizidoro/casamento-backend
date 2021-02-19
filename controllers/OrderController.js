@@ -122,7 +122,7 @@ module.exports.getUserOrders = async (req, res) => {
 
 module.exports.getOrders = async (req, res) => {
 	try {
-		const orders = await Order.findAll()
+		const orders = await Order.findAll({ order: [['createdAt', 'DESC']] })
 		res.json(orders)
 	} catch (error) {
 		res.status(500).json(error)
