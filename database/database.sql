@@ -34,7 +34,7 @@ CREATE TABLE Confirmations
     updatedAt   TIMESTAMP,
 
     song        VARCHAR(255) NOT NULL,
-    guest       VARCHAR(255) NOT NULL UNIQUE,
+    guest       VARCHAR(255) NOT NULL,
     email       VARCHAR(255) NOT NULL,
     displayName VARCHAR(255) NOT NULL
 );
