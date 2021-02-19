@@ -11,7 +11,7 @@ module.exports.createOrder = async (req, res) => {
 	const PAGARME_API_KEY = process.env.PAGARME_API_KEY || 'ak_test_eWevGD63bFCvo1pjQ4zPEOtp7SiFEo'
 
 	const order = {
-		amount: product.value * 100,
+		amount: Math.round(product.value * 100),
 		postback_url: POSTBACK_URL,
 		soft_descriptor: 'Casamento Leo',
 		customer: {
@@ -45,7 +45,7 @@ module.exports.createOrder = async (req, res) => {
 			{
 				id: product.id,
 				title: product.name,
-				unit_price: product.value * 100,
+				unit_price: Math.round(product.value * 100),
 				quantity: 1,
 				tangible: false,
 			},

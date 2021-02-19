@@ -23,8 +23,8 @@ CREATE TABLE Logs
 
     type      VARCHAR(255) NOT NULL,
     route     VARCHAR(255) DEFAULT NULL,
-    req       TEXT,
-    headers   TEXT
+    req       LONGTEXT,
+    headers   LONGTEXT
 );
 
 CREATE TABLE Confirmations
